@@ -128,7 +128,7 @@ class PortfolioHomeScreen extends StatelessWidget {
         VideoClip(
           label: 'プレイ動画',
           videoUrl:
-              'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/Go_StoleB.mp4',
+              'https://github.com/ogebosama/Portfolio/releases/download/v1.0-videos/Go_StoleB.mp4',
         ),
       ],
     ),
@@ -141,7 +141,7 @@ class PortfolioHomeScreen extends StatelessWidget {
         VideoClip(
           label: 'プレイ動画',
           videoUrl:
-              'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/XAL02100133954-20250911-0002.mp4',
+              'https://github.com/ogebosama/Portfolio/releases/download/v1.0-videos/XAL02100133954-20250911-0002.mp4',
         ),
       ],
     ),
@@ -154,7 +154,7 @@ class PortfolioHomeScreen extends StatelessWidget {
         VideoClip(
           label: 'プレイ動画',
           videoUrl:
-              'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/animarizumu.mp4',
+              'https://github.com/ogebosama/Portfolio/releases/download/v1.0-videos/animarizumu.mp4',
         ),
       ],
       award: '銅賞受賞',
@@ -175,12 +175,12 @@ class PortfolioHomeScreen extends StatelessWidget {
         VideoClip(
           label: 'ボット対決',
           videoUrl:
-              'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/Kakuge.mp4',
+              'https://github.com/ogebosama/Portfolio/releases/download/v1.0-videos/Kakuge.mp4',
         ),
         VideoClip(
           label: 'ローカル対戦',
-          asset:
-              'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/KakugeNet.mp4',
+          videoUrl:
+              'https://github.com/ogebosama/Portfolio/releases/download/v1.0-videos/KakugeNet.mp4',
           rotationQuarterTurns: 3,
         ),
       ],
@@ -193,9 +193,9 @@ class PortfolioHomeScreen extends StatelessWidget {
           'こだわったところは、インクの染まった濃さの段階や、武器の種類、ゲームバランスにこだわりました。',
       clips: [
         VideoClip(
-          label: 'メインクリップ',
+          label: 'プレイ動画',
           videoUrl:
-              'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/inkwors.mp4',
+              'https://github.com/ogebosama/Portfolio/releases/download/v1.0-videos/inkwors.mp4',
         ),
       ],
       award: 'Siv3Dバンダイナムコ杯2025審査員賞受賞',
@@ -211,7 +211,7 @@ class PortfolioHomeScreen extends StatelessWidget {
         VideoClip(
           label: 'メインクリップ',
           videoUrl:
-              'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/NEOZIP.mp4',
+              'https://github.com/ogebosama/Portfolio/releases/download/v1.0-videos/NEOZIP.mp4',
         ),
       ],
     ),
@@ -227,7 +227,7 @@ class PortfolioHomeScreen extends StatelessWidget {
         VideoClip(
           label: 'プレイ動画',
           videoUrl:
-              'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/otimono.mp4',
+              'https://github.com/ogebosama/Portfolio/releases/download/v1.0-videos/otimono.mp4',
         ),
       ],
     ),
@@ -241,7 +241,7 @@ class PortfolioHomeScreen extends StatelessWidget {
         VideoClip(
           label: 'プレイ動画',
           videoUrl:
-              'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/comicosmic.mp4',
+              'https://github.com/ogebosama/Portfolio/releases/download/v1.0-videos/comicosmic.mp4',
         ),
       ],
     ),
