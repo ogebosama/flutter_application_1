@@ -524,9 +524,7 @@ class _HighlightSection extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           // 動画カード一覧
-          ...PortfolioHomeScreen.featuredVideos.map(
-            PortfolioHomeScreen.cardFor,
-          ),
+          _WorksGrid(works: PortfolioHomeScreen.featuredVideos),
         ],
       ),
     );
@@ -1045,9 +1043,7 @@ class OtherWorksScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              ...PortfolioHomeScreen.otherVideos.map(
-                PortfolioHomeScreen.cardFor,
-              ),
+              _WorksGrid(works: PortfolioHomeScreen.otherVideos),
             ],
           ),
         ),
@@ -1276,6 +1272,41 @@ class _NavArrow extends StatelessWidget {
         ),
         child: Icon(icon, color: Colors.white, size: 24),
       ),
+    );
+  }
+}
+
+// ─────────────────────────────
+//  カード一覧グリッド(2列レスポンシブ)
+// ─────────────────────────────
+class _WorksGrid extends StatelessWidget {
+  final List<FeaturedVideo> works;
+  const _WorksGrid({required this.works});
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        const spacing = 16.0;
+        // 画面幅が広ければ2列、狭ければ1列
+        final isWide = constraints.maxWidth > 700;
+        final cardWidth = isWide
+            ? (constraints.maxWidth - spacing) / 2
+            : constraints.maxWidth;
+
+        return Wrap(
+          spacing: spacing,
+          runSpacing: spacing,
+          children: works
+              .map(
+                (v) => SizedBox(
+                  width: cardWidth,
+                  child: PortfolioHomeScreen.cardFor(v),
+                ),
+              )
+              .toList(),
+        );
+      },
     );
   }
 }
