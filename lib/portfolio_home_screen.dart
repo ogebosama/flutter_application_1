@@ -607,6 +607,14 @@ class _VideoCardState extends State<_VideoCard> {
     }
   }
 
+  // 秒数を "mm:ss" 形式に整形
+  String _formatDuration(Duration d) {
+    String two(int n) => n.toString().padLeft(2, '0');
+    final minutes = two(d.inMinutes.remainder(60));
+    final seconds = two(d.inSeconds.remainder(60));
+    return '$minutes:$seconds';
+  }
+
   @override
   Widget build(BuildContext context) {
     final hasAward = widget.featured.award != null;
@@ -691,6 +699,104 @@ class _VideoCardState extends State<_VideoCard> {
                                 ),
                               ),
                             ),
+
+                          Positioned(
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            child: Container(
+                              padding: const EdgeInsets.fromLTRB(12, 24, 12, 4),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                  colors: [
+                                    Colors.black.withOpacity(0.7),
+                                    Colors.transparent,
+                                  ],
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  // シークバー本体
+                                  SliderTheme(
+                                    data: SliderTheme.of(context).copyWith(
+                                      trackHeight: 3,
+                                      thumbShape: const RoundSliderThumbShape(
+                                        enabledThumbRadius: 6,
+                                      ),
+                                      overlayShape:
+                                          const RoundSliderOverlayShape(
+                                            overlayRadius: 14,
+                                          ),
+                                      activeTrackColor: const Color(0xFFBB86FC),
+                                      inactiveTrackColor: Colors.white24,
+                                      thumbColor: const Color(0xFFBB86FC),
+                                      overlayColor: const Color(
+                                        0xFFBB86FC,
+                                      ).withOpacity(0.3),
+                                    ),
+                                    child: Slider(
+                                      value: _controller
+                                          .value
+                                          .position
+                                          .inMilliseconds
+                                          .toDouble()
+                                          .clamp(
+                                            0.0,
+                                            _controller
+                                                .value
+                                                .duration
+                                                .inMilliseconds
+                                                .toDouble(),
+                                          ),
+                                      max: _controller
+                                          .value
+                                          .duration
+                                          .inMilliseconds
+                                          .toDouble(),
+                                      onChanged: (value) {
+                                        _controller.seekTo(
+                                          Duration(milliseconds: value.toInt()),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  // 時間表示
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          _formatDuration(
+                                            _controller.value.position,
+                                          ),
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                        Text(
+                                          _formatDuration(
+                                            _controller.value.duration,
+                                          ),
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
