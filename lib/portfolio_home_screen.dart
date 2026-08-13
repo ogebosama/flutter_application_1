@@ -203,7 +203,7 @@ class PortfolioHomeScreen extends StatelessWidget {
     ),
 
     FeaturedVideo(
-      title: 'アクションゲーム 「NEOZIP」（グループ制作）※現在制作中※\n2026年3月制作',
+      title: 'アクションゲーム 「NEOZIP」（グループ制作）\n2026年3月制作',
       description:
           'ジッパーを使ったアクションゲームで、ジッパーを開けることで、敵を倒したり、塞いでいる壁が通れたり、移動手段として作りました。\n'
           '私は、プレイヤーのアニメーション管理、ジッパーのギミックにこだわりました。原案は私が考えました。\nそのほかにも、定期的のミーティングを欠かさず参加し、どのようにしたら面白くなるか、作業感をなくせるかなど積極的に話し合い、ギミックの拡張や修正を行いました。',
@@ -211,7 +211,7 @@ class PortfolioHomeScreen extends StatelessWidget {
         VideoClip(
           label: 'メインクリップ',
           videoUrl:
-              'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/NEOZIP.mp4',
+              'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/NEO-ZIP.mp4',
         ),
       ],
     ),
