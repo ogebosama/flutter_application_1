@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:simple_icons/simple_icons.dart';
+import 'pages/menu_screen.dart';
 
 // ─────────────────────────────
 //  アプリのルート
@@ -14,7 +14,7 @@ class PortfolioApp extends StatelessWidget {
       title: 'Portfolio',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: true),
-      home: const PortfolioHomeScreen(),
+      home: const MenuScreen(),
     );
   }
 }
@@ -61,62 +61,10 @@ class FeaturedVideo {
 }
 
 // ─────────────────────────────
-//  スキルデータ
-// ─────────────────────────────
-class Skill {
-  final String name;
-  final IconData? icon;
-  final Color? iconColor;
-
-  const Skill({required this.name, this.icon, this.iconColor});
-}
-
-// ─────────────────────────────
 //  ホーム画面
 // ─────────────────────────────
 class PortfolioHomeScreen extends StatelessWidget {
   const PortfolioHomeScreen({super.key});
-
-  //  自分の名前・肩書きをここで変える
-  static const String myName = '鍋坂 明穂（ナベサカ アキホ）';
-  static const String mySubtitle = 'ゲームプログラマー志望';
-
-  static const String aboutText =
-      'はじめまして、鍋坂 明穂です。\n'
-      'C++やDirectX11を用いたゲーム制作を個人や、グループで制作しています。\n'
-      'どうしたらプレイヤーは楽しんでくれるのか、どうしたら面白いゲームになるのかを日々考えながら制作しています。\n';
-
-  static const List<Skill> skills = [
-    Skill(
-      name: 'C++',
-      icon: SimpleIcons.cplusplus,
-      iconColor: Color(0xFF00599C),
-    ),
-    Skill(
-      name: 'DirectX11',
-      icon: Icons.videogame_asset, // 公式アイコンが simple_icons になし
-      iconColor: Color(0xFF76B900),
-    ),
-    Skill(name: 'ネットワークプログラミング(学習中)'), // アイコンなし
-    Skill(name: 'Unity', icon: SimpleIcons.unity, iconColor: Colors.white),
-    Skill(
-      name: 'Flutter',
-      icon: SimpleIcons.flutter,
-      iconColor: Color(0xFF54C5F8),
-    ),
-    Skill(
-      name: 'Eclipse',
-      icon: SimpleIcons.eclipseide,
-      iconColor: Colors.white,
-    ),
-    Skill(name: 'Git', icon: SimpleIcons.git, iconColor: Color(0xFFF05032)),
-    Skill(
-      name: 'Blender',
-      icon: SimpleIcons.blender,
-      iconColor: Color.fromARGB(255, 255, 116, 52),
-    ),
-    Skill(name: 'Maya'),
-  ];
 
   //  注目動画リスト（自由に追加する）
   static const List<FeaturedVideo> featuredVideos = [
@@ -278,16 +226,25 @@ class PortfolioHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF0D0D0D),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF0D0D0D),
+        foregroundColor: Colors.white,
+        elevation: 0,
+        title: const Text(
+          'WORKS',
+          style: TextStyle(
+            letterSpacing: 4,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _NameHeader(),
-              const _AboutSection(),
-              const SizedBox(height: 32),
-              const _SkillsSection(),
-              const SizedBox(height: 40),
+              const SizedBox(height: 16),
               const _HighlightSection(),
 
               const SizedBox(height: 24),
@@ -297,184 +254,6 @@ class PortfolioHomeScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────
-//  名前ヘッダー
-// ─────────────────────────────
-class _NameHeader extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(24, 60, 24, 48),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFF1A0533), Color(0xFF0D0D0D)],
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'PORTFOLIO',
-            style: TextStyle(
-              color: Color(0xFFBB86FC),
-              fontSize: 11,
-              letterSpacing: 5,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 12),
-          ShaderMask(
-            shaderCallback: (bounds) => const LinearGradient(
-              colors: [Colors.white, Color(0xFFBB86FC)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ).createShader(bounds),
-            child: const Text(
-              PortfolioHomeScreen.myName,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 52,
-                fontWeight: FontWeight.w900,
-                height: 1.1,
-                letterSpacing: -1.5,
-              ),
-            ),
-          ),
-          const SizedBox(height: 12),
-          const Text(
-            PortfolioHomeScreen.mySubtitle,
-            style: TextStyle(
-              color: Colors.white54,
-              fontSize: 16,
-              letterSpacing: 1,
-              fontWeight: FontWeight.w300,
-            ),
-          ),
-          const SizedBox(height: 24),
-          Container(
-            width: 48,
-            height: 3,
-            decoration: BoxDecoration(
-              color: const Color(0xFFBB86FC),
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────
-//  ABOUT セクション
-// ─────────────────────────────
-class _AboutSection extends StatelessWidget {
-  const _AboutSection();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'ABOUT',
-            style: TextStyle(
-              color: Colors.white38,
-              fontSize: 12,
-              letterSpacing: 4,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            PortfolioHomeScreen.aboutText,
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 15,
-              height: 1.7,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────
-//  SKILLS セクション
-// ─────────────────────────────
-class _SkillsSection extends StatelessWidget {
-  const _SkillsSection();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'SKILLS',
-            style: TextStyle(
-              color: Colors.white38,
-              fontSize: 12,
-              letterSpacing: 4,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: PortfolioHomeScreen.skills.map((skill) {
-              return Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF1A1A2E),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: const Color(0xFFBB86FC).withOpacity(0.3),
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // アイコンがあれば表示
-                    if (skill.icon != null) ...[
-                      Icon(
-                        skill.icon,
-                        size: 16,
-                        color: skill.iconColor ?? const Color(0xFFBB86FC),
-                      ),
-                      const SizedBox(width: 6),
-                    ],
-                    Text(
-                      skill.name,
-                      style: const TextStyle(
-                        color: Color(0xFFBB86FC),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }).toList(),
-          ),
-        ],
       ),
     );
   }
