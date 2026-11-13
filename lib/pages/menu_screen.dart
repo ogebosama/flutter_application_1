@@ -22,88 +22,157 @@ class MenuScreen extends StatelessWidget {
             colors: [Color(0xFF1A0533), Color(0xFF0D0D0D)],
           ),
         ),
-        child: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 720),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'PORTFOLIO',
-                      style: TextStyle(
-                        color: Color(0xFFBB86FC),
-                        fontSize: 11,
-                        letterSpacing: 5,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    // 大きな見出し
-                    ShaderMask(
-                      shaderCallback: (bounds) => const LinearGradient(
-                        colors: [Colors.white, Color(0xFFBB86FC)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ).createShader(bounds),
-                      child: const Text(
-                        'ようこそ！\nここは鍋坂明穂の\nポートフォリオです',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 44,
-                          fontWeight: FontWeight.w900,
-                          height: 1.25,
-                          letterSpacing: -1,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    Container(
-                      width: 48,
-                      height: 3,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFBB86FC),
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                    const SizedBox(height: 48),
-                    // ボタン（横並び）
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+        child: Stack(
+          children: [
+            // 背景の飾り画像（半透明）
+            const _BgImage('bukitukaiIcon.png', Alignment.center, 360),
+            const _BgImage('chainGeyIcon.png', Alignment.bottomCenter, 220),
+            const _BgImage(
+              'kokoAtama.png',
+              Alignment.centerRight,
+              160,
+              angle: 0.35,
+            ),
+            const _BgImage(
+              'kokobikkuri.png',
+              Alignment.centerLeft,
+              240,
+              angle: -0.35,
+            ),
+            const _BgImage(
+              'kokowork.png',
+              Alignment.bottomRight,
+              120,
+              angle: 0.5,
+            ),
+            const _BgImage(
+              'kokowork2.png',
+              Alignment.topLeft,
+              220,
+              angle: -0.5,
+            ),
+            const _BgImage('pypeGeyIcon.png', Alignment(0.7, -1), 200),
+            SafeArea(
+              child: Center(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 40,
+                  ),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 720),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: _IconMenuButton(
-                            asset: 'assets/images/icons/RedguyIcon.png',
-                            label: '今までの作品を見る',
-                            bubbleText: '今までの作品を見るときは私をクリック',
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const PortfolioHomeScreen(),
-                              ),
+                        const Text(
+                          'PORTFOLIO',
+                          style: TextStyle(
+                            color: Color(0xFFBB86FC),
+                            fontSize: 11,
+                            letterSpacing: 5,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        // 大きな見出し
+                        ShaderMask(
+                          shaderCallback: (bounds) => const LinearGradient(
+                            colors: [Colors.white, Color(0xFFBB86FC)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ).createShader(bounds),
+                          child: const Text(
+                            'ようこそ！\nここは鍋坂明穂の\nポートフォリオです',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 44,
+                              fontWeight: FontWeight.w900,
+                              height: 1.25,
+                              letterSpacing: -1,
                             ),
                           ),
                         ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _IconMenuButton(
-                            asset: 'assets/images/icons/BlueguyIcon.png',
-                            label: 'プロフィール',
-                            bubbleText: 'プロフィールを見るときは私をクリック',
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const ProfileScreen(),
+                        const SizedBox(height: 24),
+                        Container(
+                          width: 48,
+                          height: 3,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFBB86FC),
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                        const SizedBox(height: 48),
+                        // ボタン（横並び）
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              child: _IconMenuButton(
+                                asset: 'assets/images/icons/RedguyIcon.png',
+                                label: '今までの作品を見る',
+                                bubbleText: '今までの作品を見るときは私をクリック',
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const PortfolioHomeScreen(),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: _IconMenuButton(
+                                asset: 'assets/images/icons/BlueguyIcon.png',
+                                label: 'プロフィール',
+                                bubbleText: 'プロフィールを見るときは私をクリック',
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const ProfileScreen(),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────
+//  背景の半透明画像
+// ─────────────────────────────
+class _BgImage extends StatelessWidget {
+  final String file;
+  final Alignment alignment;
+  final double height;
+  final double angle; // ラジアン
+
+  const _BgImage(this.file, this.alignment, this.height, {this.angle = 0});
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
+      child: IgnorePointer(
+        child: Align(
+          alignment: alignment,
+          child: Transform.rotate(
+            angle: angle,
+            child: Opacity(
+              opacity: 0.25,
+              child: Image.asset(
+                'assets/images/icons/$file',
+                height: height,
+                fit: BoxFit.contain,
               ),
             ),
           ),

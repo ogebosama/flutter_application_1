@@ -284,22 +284,33 @@ class _HighlightSection extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           // 大きな見出し(グラデーション付き)
-          ShaderMask(
-            shaderCallback: (bounds) => const LinearGradient(
-              colors: [Colors.white, Color(0xFFBB86FC)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ).createShader(bounds),
-            child: const Text(
-              'これだけは\n見てほしい…！',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 38,
-                fontWeight: FontWeight.w900,
-                height: 1.2,
-                letterSpacing: -1,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ShaderMask(
+                shaderCallback: (bounds) => const LinearGradient(
+                  colors: [Colors.white, Color(0xFFBB86FC)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ).createShader(bounds),
+                child: const Text(
+                  'これだけは\n見てほしい…！',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 38,
+                    fontWeight: FontWeight.w900,
+                    height: 1.2,
+                    letterSpacing: -1,
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(width: 16),
+              Image.asset(
+                'assets/gif/player_goal_spritesheet.gif',
+                height: 96,
+                fit: BoxFit.contain,
+              ),
+            ],
           ),
           const SizedBox(height: 24),
           // 動画カード一覧
