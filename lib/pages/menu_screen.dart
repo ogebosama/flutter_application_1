@@ -71,12 +71,13 @@ class MenuScreen extends StatelessWidget {
                     const SizedBox(height: 48),
                     // ボタン（横並び）
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Expanded(
-                          child: _MenuButton(
+                          child: _IconMenuButton(
+                            asset: 'assets/images/icons/RedguyIcon.png',
                             label: '今までの作品を見る',
-                            icon: Icons.sports_esports_rounded,
-                            filled: true,
+                            bubbleText: '今までの作品を見るときは私をクリック',
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -87,9 +88,10 @@ class MenuScreen extends StatelessWidget {
                         ),
                         const SizedBox(width: 12),
                         Expanded(
-                          child: _MenuButton(
+                          child: _IconMenuButton(
+                            asset: 'assets/images/icons/BlueguyIcon.png',
                             label: 'プロフィール',
-                            icon: Icons.person_rounded,
+                            bubbleText: 'プロフィールを見るときは私をクリック',
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -112,60 +114,94 @@ class MenuScreen extends StatelessWidget {
 }
 
 // ─────────────────────────────
-//  メニューボタン
+//  アイコンボタン（吹き出し付き・ホバーで色反転）
 // ─────────────────────────────
-class _MenuButton extends StatelessWidget {
+class _IconMenuButton extends StatefulWidget {
+  final String asset;
   final String label;
-  final IconData icon;
+  final String bubbleText;
   final VoidCallback onTap;
-  final bool filled; // true なら塗りつぶし（メインのボタン）
 
-  const _MenuButton({
+  const _IconMenuButton({
+    required this.asset,
     required this.label,
-    required this.icon,
+    required this.bubbleText,
     required this.onTap,
-    this.filled = false,
   });
 
   @override
-  Widget build(BuildContext context) {
-    const accent = Color(0xFFBB86FC);
-    final fg = filled ? const Color(0xFF0D0D0D) : accent;
+  State<_IconMenuButton> createState() => _IconMenuButtonState();
+}
 
-    return Material(
-      color: filled ? accent : const Color(0xFF1A1A2E),
-      borderRadius: BorderRadius.circular(16),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Container(
-          constraints: const BoxConstraints(minHeight: 72),
-          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: accent.withOpacity(0.5), width: 1.5),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+class _IconMenuButtonState extends State<_IconMenuButton> {
+  bool _hover = false;
+
+  static const _invert = ColorFilter.matrix(<double>[
+    -1, 0, 0, 0, 255, //
+    0, -1, 0, 0, 255,
+    0, 0, -1, 0, 255,
+    0, 0, 0, 1, 0,
+  ]);
+  static const _normal = ColorFilter.mode(Colors.transparent, BlendMode.dst);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // 吹き出し
+        SizedBox(
+          width: 200,
+          height: 200,
+          child: Stack(
+            alignment: Alignment.center,
             children: [
-              Icon(icon, color: fg, size: 22),
-              const SizedBox(width: 10),
-              Flexible(
-                child: Text(
-                  label,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: fg,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 1,
+              Positioned.fill(
+                child: Image.asset(
+                  'assets/images/icons/fukidasi.png',
+                  fit: BoxFit.contain,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(40, 30, 40, 70),
+                child: Center(
+                  child: Text(
+                    widget.bubbleText,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      height: 1.3,
+                    ),
                   ),
                 ),
               ),
             ],
           ),
         ),
-      ),
+        // アイコン（クリックで遷移・ホバーで色反転）
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (_) => setState(() => _hover = true),
+          onExit: (_) => setState(() => _hover = false),
+          child: GestureDetector(
+            onTap: widget.onTap,
+            child: Semantics(
+              button: true,
+              label: widget.label,
+              child: ColorFiltered(
+                colorFilter: _hover ? _invert : _normal,
+                child: Image.asset(
+                  widget.asset,
+                  height: 140,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
