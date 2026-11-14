@@ -163,6 +163,24 @@ class PortfolioHomeScreen extends StatelessWidget {
         ),
       ],
     ),
+
+        FeaturedVideo(
+      title: 'シューティングゲーム 「InkShooting」（個人制作）\n2026年7月制作',
+      description:
+          '既存ゲームを参考にした。\n'
+          'フレームワークは、コンポーネント指向を使い、新しい機能を楽に追加できるように構築しました。\n'
+          'そのほかにも、当たり判定の調整や敵の挙動の調整、細かな演出を追加しました。',
+      clips: [
+        VideoClip(
+          label: 'メインクリップ',
+          videoUrl:
+              'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/InkShooting.mp4',
+        ),
+      ],
+      award: '構成力賞受賞',
+      awardColor: Color(0xFF2E7D32),
+    ),
+
   ];
 
   static const List<FeaturedVideo> otherVideos = [
@@ -427,7 +445,7 @@ class _VideoCardState extends State<_VideoCard> {
         boxShadow: hasAward
             ? [
                 BoxShadow(
-                  color: const Color(0xFFCD7F32).withOpacity(0.3),
+                  color: awardColor.withOpacity(0.3),
                   blurRadius: 20,
                   spreadRadius: -2,
                 ),
@@ -800,10 +818,10 @@ class OtherWorksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0D0D),
+      backgroundColor: const Color(0xFF81D4FA),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0D0D0D),
-        foregroundColor: Colors.white,
+        backgroundColor: const Color(0xFF81D4FA),
+        foregroundColor: Colors.black,
         elevation: 0,
         title: const Text(
           'OTHER WORKS',
@@ -825,7 +843,7 @@ class OtherWorksScreen extends StatelessWidget {
                 child: Text(
                   'これまでに制作した作品の一覧',
                   style: TextStyle(
-                    color: Colors.white70,
+                    color: Colors.black87,
                     fontSize: 14,
                     height: 1.6,
                   ),
