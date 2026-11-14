@@ -225,10 +225,10 @@ class PortfolioHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0D0D),
+      backgroundColor: const Color(0xFF81D4FA),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0D0D0D),
-        foregroundColor: Colors.white,
+        backgroundColor: const Color(0xFF81D4FA),
+        foregroundColor: Colors.black,
         elevation: 0,
         title: const Text(
           'WORKS',
@@ -270,46 +270,44 @@ class _HighlightSection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // 小さいラベル
           const Text(
             'PICK UP',
             style: TextStyle(
-              color: Color(0xFFBB86FC),
-              fontSize: 11,
+              color: Colors.black,
+              fontSize: 16,
               letterSpacing: 5,
               fontWeight: FontWeight.w600,
             ),
           ),
           const SizedBox(height: 12),
-          // 大きな見出し(グラデーション付き)
+          // 大きな見出し（両サイドにgif）
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ShaderMask(
-                shaderCallback: (bounds) => const LinearGradient(
-                  colors: [Colors.white, Color(0xFFBB86FC)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ).createShader(bounds),
-                child: const Text(
-                  'これだけは\n見てほしい…！',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 38,
-                    fontWeight: FontWeight.w900,
-                    height: 1.2,
-                    letterSpacing: -1,
+              const _GoalGif(),
+              const SizedBox(width: 16),
+              const Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    'これだけは見てほしい…！',
+                    softWrap: false,
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 48,
+                      fontWeight: FontWeight.w900,
+                      height: 1.2,
+                      letterSpacing: -1,
+                    ),
                   ),
                 ),
               ),
               const SizedBox(width: 16),
-              Image.asset(
-                'assets/gif/player_goal_spritesheet.gif',
-                height: 96,
-                fit: BoxFit.contain,
-              ),
+              const _GoalGif(),
             ],
           ),
           const SizedBox(height: 24),
@@ -1097,6 +1095,25 @@ class _WorksGrid extends StatelessWidget {
               .toList(),
         );
       },
+    );
+  }
+}
+
+// ─────────────────────────────
+//  見出し脇のgif（GitHub Releases から読み込み）
+//  CORSで失敗しても <img> 要素で表示し、それでも失敗したら何も出さない
+// ─────────────────────────────
+class _GoalGif extends StatelessWidget {
+  const _GoalGif();
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.network(
+      'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/player_goal_spritesheet.gif',
+      height: 96,
+      fit: BoxFit.contain,
+      webHtmlElementStrategy: WebHtmlElementStrategy.prefer,
+      errorBuilder: (_, _, _) => const SizedBox(width: 96, height: 96),
     );
   }
 }
