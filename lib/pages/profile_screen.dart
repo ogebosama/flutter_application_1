@@ -75,14 +75,19 @@ class ProfileScreen extends StatelessWidget {
       iconColor: Color.fromARGB(255, 255, 116, 52),
     ),
     Skill(name: 'Maya'),
+    Skill(
+      name: 'Go言語（さわりだけ）',
+      icon: SimpleIcons.go,
+      iconColor: Color(0xFF00ADD8),
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0D0D),
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1A0533),
+        backgroundColor: const Color(0xFF1565C0),
         foregroundColor: Colors.white,
         elevation: 0,
         title: const Text(
@@ -94,19 +99,55 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const _NameHeader(),
-              for (final section in sections) ...[
-                _TextSection(section: section),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFF1565C0), Colors.black],
+          ),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const _NameHeader(),
                 const SizedBox(height: 32),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final content = Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        for (final section in sections) ...[
+                          _TextSection(section: section),
+                          const SizedBox(height: 32),
+                        ],
+                        const _SkillsSection(),
+                      ],
+                    );
+                    const gif = _ProfilePhoto();
+                    // 狭い画面では縦に並べる
+                    if (constraints.maxWidth < 800) {
+                      return Column(
+                        children: [content, const SizedBox(height: 24), gif],
+                      );
+                    }
+                    // 広い画面: 左の空きスペースにgif、右側にABOUT/SKILLS
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Expanded(child: Center(child: gif)),
+                        Expanded(child: content),
+                      ],
+                    );
+                  },
+                ),
+                const SizedBox(height: 40),
               ],
-              const _SkillsSection(),
-              const SizedBox(height: 40),
-            ],
+            ),
           ),
         ),
       ),
@@ -125,52 +166,48 @@ class _NameHeader extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(24, 40, 24, 48),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFF1A0533), Color(0xFF0D0D0D)],
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      color: const Color(0xFF81D4FA),
+      child: Row(
         children: [
-          ShaderMask(
-            shaderCallback: (bounds) => const LinearGradient(
-              colors: [Colors.white, Color(0xFFBB86FC)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ).createShader(bounds),
-            child: const Text(
-              ProfileScreen.myName,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 44,
-                fontWeight: FontWeight.w900,
-                height: 1.1,
-                letterSpacing: -1.5,
-              ),
+          // 左: 顔写真
+          const SizedBox(width: 160, child: _KawaiiGif(height: 160)),
+          // 真ん中: 名前・肩書き
+          const Expanded(
+            child: Column(
+              children: [
+                Text(
+                  ProfileScreen.myName,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 44,
+                    fontWeight: FontWeight.w900,
+                    height: 1.1,
+                    letterSpacing: -1.5,
+                  ),
+                ),
+                SizedBox(height: 12),
+                Text(
+                  ProfileScreen.mySubtitle,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 18,
+                    letterSpacing: 1,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                SizedBox(height: 24),
+                SizedBox(
+                  width: 48,
+                  height: 3,
+                  child: ColoredBox(color: Colors.black),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 12),
-          const Text(
-            ProfileScreen.mySubtitle,
-            style: TextStyle(
-              color: Colors.white54,
-              fontSize: 16,
-              letterSpacing: 1,
-              fontWeight: FontWeight.w300,
-            ),
-          ),
-          const SizedBox(height: 24),
-          Container(
-            width: 48,
-            height: 3,
-            decoration: BoxDecoration(
-              color: const Color(0xFFBB86FC),
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
+          // 右: gif（左と対称）
+          const SizedBox(width: 160, child: _KawaiiGif(height: 160)),
         ],
       ),
     );
@@ -218,7 +255,7 @@ class _TextSection extends StatelessWidget {
             section.body,
             style: const TextStyle(
               color: Colors.white70,
-              fontSize: 15,
+              fontSize: 20,
               height: 1.7,
             ),
           ),
@@ -285,6 +322,45 @@ class _SkillsSection extends StatelessWidget {
             }).toList(),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────
+//  空きスペースのgif（GitHub Releases から読み込み）
+// ─────────────────────────────
+class _KawaiiGif extends StatelessWidget {
+  final double height;
+  const _KawaiiGif({this.height = 240});
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.network(
+      'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/kawaiiAnim.gif',
+      height: height,
+      fit: BoxFit.contain,
+      webHtmlElementStrategy: WebHtmlElementStrategy.prefer,
+      errorBuilder: (_, _, _) => SizedBox(height: height),
+    );
+  }
+}
+
+// ─────────────────────────────
+//  顔写真
+// ─────────────────────────────
+class _ProfilePhoto extends StatelessWidget {
+  const _ProfilePhoto();
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: Image.asset(
+        'assets/images/Nabesaka_Akiho.jpg',
+        height: 240,
+        width: 240,
+        fit: BoxFit.cover,
       ),
     );
   }
