@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import '../portfolio_home_screen.dart';
 import 'profile_screen.dart';
@@ -5,23 +6,47 @@ import 'profile_screen.dart';
 // ─────────────────────────────
 //  メニュー画面（最初に表示される画面）
 // ─────────────────────────────
-class MenuScreen extends StatelessWidget {
+class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
+
+  @override
+  State<MenuScreen> createState() => _MenuScreenState();
+}
+
+class _MenuScreenState extends State<MenuScreen> {
+  static const _titleColors = [
+    Colors.red,
+    Colors.orange,
+    Colors.purple,
+    Colors.green,
+    Colors.blue,
+    Colors.pink,
+  ];
+  int _colorIndex = 0;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(milliseconds: 1000), (_) {
+      setState(() => _colorIndex = (_colorIndex + 1) % _titleColors.length);
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0D0D),
+      backgroundColor: Colors.yellow,
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFF1A0533), Color(0xFF0D0D0D)],
-          ),
-        ),
+        color: Colors.yellow,
         child: Stack(
           children: [
             // 背景の飾り画像（半透明）
@@ -60,35 +85,37 @@ class MenuScreen extends StatelessWidget {
                     vertical: 40,
                   ),
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 720),
+                    constraints: const BoxConstraints(maxWidth: 1100),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Text(
                           'PORTFOLIO',
                           style: TextStyle(
-                            color: Color(0xFFBB86FC),
-                            fontSize: 11,
-                            letterSpacing: 5,
-                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                            fontSize: 20,
+                            letterSpacing: 6,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         const SizedBox(height: 16),
-                        // 大きな見出し
-                        ShaderMask(
-                          shaderCallback: (bounds) => const LinearGradient(
-                            colors: [Colors.white, Color(0xFFBB86FC)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ).createShader(bounds),
-                          child: const Text(
-                            'ようこそ！\nここは鍋坂明穂の\nポートフォリオです',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 44,
-                              fontWeight: FontWeight.w900,
-                              height: 1.25,
-                              letterSpacing: -1,
+                        // 大きな見出し（色が順番に切り替わる）
+                        AnimatedDefaultTextStyle(
+                          duration: const Duration(milliseconds: 500),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: _titleColors[_colorIndex],
+                            fontSize: 44,
+                            fontWeight: FontWeight.w900,
+                            height: 1.25,
+                            letterSpacing: -1,
+                          ),
+                          child: const FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              'ようこそ！\nここは鍋坂明穂のポートフォリオです',
+                              textAlign: TextAlign.center,
+                              softWrap: false,
                             ),
                           ),
                         ),
@@ -97,43 +124,47 @@ class MenuScreen extends StatelessWidget {
                           width: 48,
                           height: 3,
                           decoration: BoxDecoration(
-                            color: const Color(0xFFBB86FC),
+                            color: Colors.black,
                             borderRadius: BorderRadius.circular(2),
                           ),
                         ),
                         const SizedBox(height: 48),
                         // ボタン（横並び）
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              child: _IconMenuButton(
-                                asset: 'assets/images/icons/RedguyIcon.png',
-                                label: '今までの作品を見る',
-                                bubbleText: '今までの作品を見るときは私をクリック',
-                                onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const PortfolioHomeScreen(),
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 720),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: _IconMenuButton(
+                                  asset: 'assets/images/icons/RedguyIcon.png',
+                                  label: '今までの作品を見る',
+                                  bubbleText: '今までの作品を見るときは私をクリック',
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          const PortfolioHomeScreen(),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: _IconMenuButton(
-                                asset: 'assets/images/icons/BlueguyIcon.png',
-                                label: 'プロフィール',
-                                bubbleText: 'プロフィールを見るときは私をクリック',
-                                onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const ProfileScreen(),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: _IconMenuButton(
+                                  asset: 'assets/images/icons/BlueguyIcon.png',
+                                  label: 'プロフィール',
+                                  bubbleText: 'プロフィールを見るときは私をクリック',
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => const ProfileScreen(),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     ),
