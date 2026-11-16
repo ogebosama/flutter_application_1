@@ -77,6 +77,41 @@ class _MenuScreenState extends State<MenuScreen> {
               angle: -0.5,
             ),
             const _BgImage('pypeGeyIcon.png', Alignment(0.7, -1), 200),
+            const _BgImage(
+              'Afileman.png',
+              Alignment.bottomLeft,
+              160,
+              dir: 'assets/images/',
+              angle: -0.2,
+            ),
+            const _BgImage(
+              'Attack.png',
+              Alignment(-0.35, -1),
+              140,
+              dir: 'assets/images/',
+              angle: 0.15,
+            ),
+            const _BgImage(
+              'ChaseBoss.png',
+              Alignment(0.65, 0.55),
+              140,
+              dir: 'assets/images/',
+              angle: -0.1,
+            ),
+            const _BgImage(
+              'DeadWius.png',
+              Alignment(-0.65, 0.6),
+              140,
+              dir: 'assets/images/',
+              angle: 0.2,
+            ),
+            const _BgImage(
+              'POnew1.png',
+              Alignment(0.3, -0.75),
+              130,
+              dir: 'assets/images/',
+              angle: 0.1,
+            ),
             SafeArea(
               child: Center(
                 child: SingleChildScrollView(
@@ -187,8 +222,15 @@ class _BgImage extends StatelessWidget {
   final Alignment alignment;
   final double height;
   final double angle; // ラジアン
+  final String dir;
 
-  const _BgImage(this.file, this.alignment, this.height, {this.angle = 0});
+  const _BgImage(
+    this.file,
+    this.alignment,
+    this.height, {
+    this.angle = 0,
+    this.dir = 'assets/images/icons/',
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +243,7 @@ class _BgImage extends StatelessWidget {
             child: Opacity(
               opacity: 0.25,
               child: Image.asset(
-                'assets/images/icons/$file',
+                '$dir$file',
                 height: height,
                 fit: BoxFit.contain,
               ),
