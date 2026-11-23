@@ -112,6 +112,19 @@ class _MenuScreenState extends State<MenuScreen> {
               dir: 'assets/images/',
               angle: 0.1,
             ),
+            const _BgImage(
+              'AChara.png',
+              Alignment(0.45, 1),
+              130,
+              dir: 'assets/images/',
+              angle: -0.15,
+            ),
+            const _BgImage(
+              'HammerJump.png',
+              Alignment(-0.95, -0.35),
+              320,
+              angle: -0.15,
+            ),
             SafeArea(
               child: Center(
                 child: SingleChildScrollView(
@@ -155,12 +168,18 @@ class _MenuScreenState extends State<MenuScreen> {
                           ),
                         ),
                         const SizedBox(height: 24),
-                        Container(
-                          width: 48,
-                          height: 3,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(2),
+                        Image.network(
+                          'https://github.com/ogebosama/flutter_application_1/releases/tag/v1.0-videos/onpu.gif',
+                          width: 520,
+                          height: 40,
+                          fit: BoxFit.fitHeight,
+                          repeat: ImageRepeat.repeatX,
+                          errorBuilder: (_, __, ___) => Image.asset(
+                            'assets/gif/onpu.gif',
+                            width: 520,
+                            height: 40,
+                            fit: BoxFit.fitHeight,
+                            repeat: ImageRepeat.repeatX,
                           ),
                         ),
                         const SizedBox(height: 48),
