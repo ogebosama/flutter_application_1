@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_icons/simple_icons.dart';
+import '../widgets/bg_images.dart';
 import '../widgets/onpu_line.dart';
 
 // ─────────────────────────────
@@ -110,46 +111,55 @@ class ProfileScreen extends StatelessWidget {
             colors: [Color(0xFF1565C0), Colors.black],
           ),
         ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const _NameHeader(),
-                const SizedBox(height: 32),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    final content = Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        for (final section in sections) ...[
-                          _TextSection(section: section),
-                          const SizedBox(height: 32),
-                        ],
-                        const _SkillsSection(),
-                      ],
-                    );
-                    const gif = _ProfilePhoto();
-                    // 狭い画面では縦に並べる
-                    if (constraints.maxWidth < 800) {
-                      return Column(
-                        children: [content, const SizedBox(height: 24), gif],
-                      );
-                    }
-                    // 広い画面: 左の空きスペースにgif、右側にABOUT/SKILLS
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Expanded(child: Center(child: gif)),
-                        Expanded(child: content),
-                      ],
-                    );
-                  },
+        child: Stack(
+          children: [
+            const BgImages(),
+            SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const _NameHeader(),
+                    const SizedBox(height: 32),
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final content = Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            for (final section in sections) ...[
+                              _TextSection(section: section),
+                              const SizedBox(height: 32),
+                            ],
+                            const _SkillsSection(),
+                          ],
+                        );
+                        const gif = _ProfilePhoto();
+                        // 狭い画面では縦に並べる
+                        if (constraints.maxWidth < 800) {
+                          return Column(
+                            children: [
+                              content,
+                              const SizedBox(height: 24),
+                              gif,
+                            ],
+                          );
+                        }
+                        // 広い画面: 左の空きスペースにgif、右側にABOUT/SKILLS
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Expanded(child: Center(child: gif)),
+                            Expanded(child: content),
+                          ],
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 40),
+                  ],
                 ),
-                const SizedBox(height: 40),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

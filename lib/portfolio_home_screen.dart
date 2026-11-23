@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'pages/dev_screen.dart';
 import 'pages/menu_screen.dart';
+import 'widgets/bg_images.dart';
 
 // ─────────────────────────────
 //  アプリのルート
@@ -164,7 +166,7 @@ class PortfolioHomeScreen extends StatelessWidget {
       ],
     ),
 
-        FeaturedVideo(
+    FeaturedVideo(
       title: 'シューティングゲーム 「InkShooting」（個人制作）\n2026年7月制作',
       description:
           '既存ゲームを参考にした。\n'
@@ -270,21 +272,34 @@ class PortfolioHomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-              const _HighlightSection(),
+      body: Stack(
+        children: [
+          const BgImages(),
+          SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 16),
+                  const _HighlightSection(),
 
-              const SizedBox(height: 24),
-              const _OtherWorksButton(),
+                  const SizedBox(height: 24),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      _OtherWorksButton(),
+                      SizedBox(width: 24),
+                      _DevButton(),
+                    ],
+                  ),
 
-              const SizedBox(height: 40),
-            ],
+                  const SizedBox(height: 40),
+                ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -845,6 +860,70 @@ class _OtherWorksButton extends StatelessWidget {
 }
 
 // ─────────────────────────────
+//  開発中ページへのボタン
+// ─────────────────────────────
+class _DevButton extends StatelessWidget {
+  const _DevButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          width: 220,
+          height: 200,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned.fill(
+                child: Image.asset(
+                  'assets/images/icons/fukidasi.png',
+                  fit: BoxFit.contain,
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(40, 30, 40, 70),
+                child: Center(
+                  child: Text(
+                    '現在開発中のゲームを見ますか？',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      height: 1.3,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const DevScreen()),
+            ),
+            child: Semantics(
+              button: true,
+              label: '開発中のゲームを見る',
+              child: Image.asset(
+                'assets/images/icons/HammerAttack-3.png',
+                height: 140,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ─────────────────────────────
 //  その他作品画面
 // ─────────────────────────────
 class OtherWorksScreen extends StatelessWidget {
@@ -867,27 +946,32 @@ class OtherWorksScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 16, 20, 40),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(bottom: 24, top: 8),
-                child: Text(
-                  'これまでに制作した作品の一覧',
-                  style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: 14,
-                    height: 1.6,
+      body: Stack(
+        children: [
+          const BgImages(),
+          SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 24, top: 8),
+                    child: Text(
+                      'これまでに制作した作品の一覧',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 14,
+                        height: 1.6,
+                      ),
+                    ),
                   ),
-                ),
+                  _WorksGrid(works: PortfolioHomeScreen.otherVideos),
+                ],
               ),
-              _WorksGrid(works: PortfolioHomeScreen.otherVideos),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
