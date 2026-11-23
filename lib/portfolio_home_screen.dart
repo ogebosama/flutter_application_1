@@ -181,6 +181,19 @@ class PortfolioHomeScreen extends StatelessWidget {
       awardColor: Color(0xFF2E7D32),
     ),
 
+    FeaturedVideo(
+      title: 'ランゲーム 「ガラガラどん」（グループ制作）\n2026年10月制作',
+      description:
+          'このゲームは、株式会社サイバーエージェント様のインターンシップで「すすむ」をテーマにし作成したランゲームです。\n'
+          '壊すと進み、空ぶると後ろに下がり画面外に出たらゲームオーバーというリスクリターンをこだわって制作しました。製作期間は2週間です。\n',
+      clips: [
+        VideoClip(
+          label: 'プレイ動画',
+          videoUrl:
+              'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/garagaradon.mp4',
+        ),
+      ],
+    ),
   ];
 
   static const List<FeaturedVideo> otherVideos = [
@@ -763,47 +776,69 @@ class _OtherWorksButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const OtherWorksScreen()),
-          );
-        },
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 24),
-          decoration: BoxDecoration(
-            color: const Color(0xFF1A1A2E),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: const Color(0xFFBB86FC).withOpacity(0.5),
-              width: 1.5,
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // 吹き出し
+          SizedBox(
+            width: 220,
+            height: 200,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Positioned.fill(
+                  child: Image.asset(
+                    'assets/images/icons/fukidasi.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(40, 30, 40, 70),
+                  child: Center(
+                    child: Text(
+                      'その他作品を見たいときは私をクリック',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        height: 1.3,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'その他の作品を見る',
-                style: TextStyle(
-                  color: Color(0xFFBB86FC),
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1,
+          // キャラ（クリックでその他作品へ）
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const OtherWorksScreen()),
+                );
+              },
+              child: Semantics(
+                button: true,
+                label: 'その他の作品を見る',
+                child: Image.network(
+                  'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/kawaiiDeathNe.gif',
+                  height: 140,
+                  fit: BoxFit.contain,
+                  webHtmlElementStrategy: WebHtmlElementStrategy.prefer,
+                  errorBuilder: (_, _, _) => Image.asset(
+                    'assets/gif/kawaiiDeathNe.gif',
+                    height: 140,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
-              const SizedBox(width: 10),
-              const Icon(
-                Icons.arrow_forward_rounded,
-                color: Color(0xFFBB86FC),
-                size: 20,
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

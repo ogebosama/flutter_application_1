@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../portfolio_home_screen.dart';
+import '../widgets/onpu_line.dart';
 import 'profile_screen.dart';
 
 // ─────────────────────────────
@@ -168,20 +169,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           ),
                         ),
                         const SizedBox(height: 24),
-                        Image.network(
-                          'https://github.com/ogebosama/flutter_application_1/releases/tag/v1.0-videos/onpu.gif',
-                          width: 520,
-                          height: 40,
-                          fit: BoxFit.fitHeight,
-                          repeat: ImageRepeat.repeatX,
-                          errorBuilder: (_, __, ___) => Image.asset(
-                            'assets/gif/onpu.gif',
-                            width: 520,
-                            height: 40,
-                            fit: BoxFit.fitHeight,
-                            repeat: ImageRepeat.repeatX,
-                          ),
-                        ),
+                        const OnpuLine(),
                         const SizedBox(height: 48),
                         // ボタン（横並び）
                         ConstrainedBox(
@@ -282,12 +270,14 @@ class _IconMenuButton extends StatefulWidget {
   final String label;
   final String bubbleText;
   final VoidCallback onTap;
+  final double bubbleFontSize;
 
   const _IconMenuButton({
     required this.asset,
     required this.label,
     required this.bubbleText,
     required this.onTap,
+    this.bubbleFontSize = 13,
   });
 
   @override
@@ -329,9 +319,9 @@ class _IconMenuButtonState extends State<_IconMenuButton> {
                   child: Text(
                     widget.bubbleText,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.black,
-                      fontSize: 13,
+                      fontSize: widget.bubbleFontSize,
                       fontWeight: FontWeight.w700,
                       height: 1.3,
                     ),

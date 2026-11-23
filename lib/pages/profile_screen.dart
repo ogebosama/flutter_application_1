@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_icons/simple_icons.dart';
+import '../widgets/onpu_line.dart';
 
 // ─────────────────────────────
 //  スキルデータ
@@ -198,7 +199,7 @@ class _NameHeader extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 24),
-                _OnpuLine(),
+                OnpuLine(),
               ],
             ),
           ),
@@ -357,29 +358,6 @@ class _ProfilePhoto extends StatelessWidget {
         height: 240,
         width: 240,
         fit: BoxFit.cover,
-      ),
-    );
-  }
-}
-
-// 見出し下の音符ライン（GitHub Release から取得、失敗時はアセット）
-class _OnpuLine extends StatelessWidget {
-  const _OnpuLine();
-
-  @override
-  Widget build(BuildContext context) {
-    return Image.network(
-      'https://github.com/ogebosama/flutter_application_1/releases/download/v1.0-videos/onpu.gif',
-      width: 520,
-      height: 40,
-      fit: BoxFit.fitHeight,
-      repeat: ImageRepeat.repeatX,
-      errorBuilder: (_, __, ___) => Image.asset(
-        'assets/gif/onpu.gif',
-        width: 520,
-        height: 40,
-        fit: BoxFit.fitHeight,
-        repeat: ImageRepeat.repeatX,
       ),
     );
   }
