@@ -169,9 +169,8 @@ class PortfolioHomeScreen extends StatelessWidget {
     FeaturedVideo(
       title: 'シューティングゲーム 「InkShooting」（個人制作）\n2026年7月制作',
       description:
-          '既存ゲームを参考にした。\n'
           'フレームワークは、コンポーネント指向を使い、新しい機能を楽に追加できるように構築しました。\n'
-          'そのほかにも、当たり判定の調整や敵の挙動の調整、細かな演出を追加しました。',
+          'そのほかにも、当たり判定の調整や敵の挙動の調整、細かな演出にこだわりました。',
       clips: [
         VideoClip(
           label: 'メインクリップ',
